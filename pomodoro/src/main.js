@@ -1,6 +1,3 @@
-const { invoke } = window.__TAURI__.core;
-const { isPermissionGranted, requestPermission, sendNotification } = window.__TAURI__.notification;
-
 const DURATIONS = {
   work: 25 * 60,
   shortBreak: 5 * 60,
@@ -61,11 +58,11 @@ class PomodoroTimer {
     });
   }
 
-  async checkNotificationPermission() {
-    let permissionGranted = await isPermissionGranted();
-    if (!permissionGranted) {
-      const permission = await requestPermission();
-      permissionGranted = permission === "granted";
+  checkNotificationPermission() {
+    if (!("Notification" in window)) {
+      console.log("This browser does not support notifications");
+    } else if (Notification.permission === "default") {
+      Notification.requestPermission();
     }
   }
 
@@ -124,7 +121,7 @@ class PomodoroTimer {
     this.updateDisplay();
   }
 
-  async completeSession() {
+  completeSession() {
     this.state = "completed";
     clearInterval(this.intervalId);
 
@@ -133,7 +130,7 @@ class PomodoroTimer {
       this.completedEl.textContent = this.completedPomodoros;
     }
 
-    await this.sendCompletionNotification();
+    this.sendCompletionNotification();
 
     const nextType = this.getNextSessionType();
     this.autoAdvanceTimeout = setTimeout(() => {
@@ -152,13 +149,13 @@ class PomodoroTimer {
     return "work";
   }
 
-  async sendCompletionNotification() {
-    const permissionGranted = await isPermissionGranted();
-    if (permissionGranted) {
+  sendCompletionNotification() {
+    if (!("Notification" in window)) return;
+
+    if (Notification.permission === "granted") {
       const currentName = SESSION_NAMES[this.currentType];
       const nextName = SESSION_NAMES[this.getNextSessionType()];
-      sendNotification({
-        title: "Pomodoro Timer",
+      new Notification("Pomodoro Timer", {
         body: `${currentName} completed! Time for a ${nextName}.`,
       });
     }
