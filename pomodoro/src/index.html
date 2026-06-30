@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pomodoro Timer</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <div class="session-type">
+        <button class="tab active" data-type="work">WORK</button>
+        <button class="tab" data-type="shortBreak">SHORT BREAK</button>
+        <button class="tab" data-type="longBreak">LONG BREAK</button>
+      </div>
+
+      <div class="timer-container">
+        <svg class="progress-ring" viewBox="0 0 240 240">
+          <circle class="progress-ring-track" cx="120" cy="120" r="108" />
+          <circle class="progress-ring-progress" cx="120" cy="120" r="108" />
+        </svg>
+        <div class="timer-display">
+          <span class="timer-time">25:00</span>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button class="btn btn-primary" id="startBtn">START</button>
+        <button class="btn btn-secondary" id="resetBtn">RESET</button>
+      </div>
+
+      <div class="stats">
+        <span class="stats-label">Session</span>
+        <span class="stats-count"><span id="completedPomodoros">0</span>/4</span>
+      </div>
+    </div>
+
+    <script type="module" src="main.js"></script>
+  </body>
+</html>

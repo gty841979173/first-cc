@@ -1,0 +1,198 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg-primary: #1a1a2e;
+  --bg-card: #16213e;
+  --color-work: #e94560;
+  --color-break: #0f969c;
+  --color-accent: #f5b041;
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0a0;
+  --progress-track: #2a3a5e;
+}
+
+body {
+  font-family: "SF Pro Display", system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  -webkit-font-smoothing: antialiased;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px;
+  width: 100%;
+  max-width: 360px;
+}
+
+.session-type {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.tab {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  padding: 8px 4px;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.tab:hover {
+  color: var(--text-primary);
+}
+
+.tab.active {
+  color: var(--text-primary);
+}
+
+.tab.active::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background-color: var(--color-work);
+  border-radius: 2px;
+}
+
+.tab.active[data-type="shortBreak"]::after,
+.tab.active[data-type="longBreak"]::after {
+  background-color: var(--color-break);
+}
+
+.timer-container {
+  position: relative;
+  width: 240px;
+  height: 240px;
+  margin-bottom: 32px;
+}
+
+.progress-ring {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.progress-ring-track {
+  fill: none;
+  stroke: var(--progress-track);
+  stroke-width: 12;
+}
+
+.progress-ring-progress {
+  fill: none;
+  stroke: var(--color-work);
+  stroke-width: 12;
+  stroke-linecap: round;
+  stroke-dasharray: 678.76;
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 1s linear;
+}
+
+.timer-container[data-type="shortBreak"] .progress-ring-progress,
+.timer-container[data-type="longBreak"] .progress-ring-progress {
+  stroke: var(--color-break);
+}
+
+.timer-display {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.timer-time {
+  font-size: 56px;
+  font-weight: 700;
+  letter-spacing: -2px;
+  font-variant-numeric: tabular-nums;
+}
+
+.controls {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.btn {
+  border: none;
+  border-radius: 24px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 12px 32px;
+  min-width: 100px;
+}
+
+.btn-primary {
+  background-color: var(--color-work);
+  color: var(--text-primary);
+}
+
+.btn-primary:hover {
+  filter: brightness(1.1);
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-primary.paused {
+  background-color: var(--color-break);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--text-secondary);
+  border: 2px solid var(--text-secondary);
+}
+
+.btn-secondary:hover {
+  border-color: var(--color-work);
+  color: var(--color-work);
+}
+
+.stats {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background-color: var(--bg-card);
+  padding: 16px 32px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 200px;
+}
+
+.stats-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+.stats-count {
+  font-size: 24px;
+  font-weight: 700;
+}
